@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "test": "jest --ci --reporters=default --reporters=jest-junit"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ]
+  },
+  "jest-junit": {
+    "outputDirectory": ".",
+    "outputName": "junit.xml",
+    "suiteName": "TaskMaster Tests",
+    "classNameTemplate": "{filepath}",
+    "titleTemplate": "{title}",
+    "ancestorSeparator": " › "
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  },
+  "scripts": {
+    "test": "jest --verbose --coverage",
+    "test:watch": "jest --watch"
+  }
+}
