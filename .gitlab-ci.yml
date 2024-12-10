@@ -1,19 +1,42 @@
-# Node version
+# Base image
 image: node:18
 
-# Cache dependencies
+include:
+  - template: Code-Quality.gitlab-ci.yml  # Include the template properly
+
+# Define verification stages
+stages:
+  - build
+  - test
+  - code_quality  # Match the stage name from Code Quality template
+
+# Cache for efficiency
 cache:
   paths:
     - node_modules/
 
-stages:
-  - test
+# Build stage
+build_job:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - node_modules/
+      - build/
 
-# Simple test job
-test_app:
+# Automated tests with JUnit report
+test_job:
   stage: test
   script:
-    # Install dependencies
-    - npm install
-    # Run tests
     - npm test
+  artifacts:
+    when: always
+    reports:
+      junit: junit.xml  # We'll need to configure Jest to output JUnit format
+  dependencies:
+    - build_job
+
+# The code_quality job is now automatically included from the template
+# We don't need to define it manually
