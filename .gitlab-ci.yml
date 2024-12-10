@@ -1,0 +1,19 @@
+# Node version
+image: node:18
+
+# Cache dependencies
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - test
+
+# Simple test job
+test_app:
+  stage: test
+  script:
+    # Install dependencies
+    - npm install
+    # Run tests
+    - npm test
