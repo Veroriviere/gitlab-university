@@ -59,7 +59,16 @@ users:
 * Test an ec2 creation from the CLI
   ```
   # adapt the script
-  ./create-ec2.sh
+  # Set environment variables
+  export AWS_TEAM_TAG="Team=team1"
+  export INSTANCE_NAME="team1-test-instance"
+
+  # Create instance with both Team and Name tags
+  aws ec2 run-instances \
+  --image-id ami-071878317c449ae48 \
+  --instance-type t2.micro \
+  --tag-specifications \
+  "ResourceType=instance,Tags=[{Key=Team,Value=${AWS_TEAM_TAG},Key=Name,Value=${INSTANCE_NAME}}]"
   ```
   **After the test, go to the console and terminate the instance**
 
